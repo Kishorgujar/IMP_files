@@ -1,0 +1,13 @@
+- name: Create Docker Container
+  community.docker.docker_container:
+    name: "{{ item }}"
+    image: httpd
+    detach: true
+    state: started
+    ports:
+      - "80"
+    volumes:
+      - "/home/itadmin/clonecod/:/usr/local/apache2/htdocs/"
+    privileged: true
+    loop: "{{ container_name }}"
+

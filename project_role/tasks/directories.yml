@@ -1,0 +1,10 @@
+- name: Create protest directory
+  file:
+    path: /home/itadmin/protest
+    state: present
+    mode: '777'
+- name: Create clonecod directory
+  file:
+    path: /home/itadmin/clonecod
+    state: present
+    mode: '777'

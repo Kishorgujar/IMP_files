@@ -1,0 +1,48 @@
+- name: Download Dependencies
+  yum:
+    name: "{{ item }}"
+    state: latest
+    loop: "{{ p }}"
+- name: Start Pkg
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+    loop: "{{ p }}"
+- name: Create protest directory
+  file:
+    path: /home/itadmin/protest
+    state: present
+    mode: '777'
+- name: Create clonecod directory
+  file:
+    path: /home/itadmin/clonecod
+    state: present
+    mode: '777'
+- name: Create Script For executing particular command in crontab
+  content: |
+    #!/bin/bash
+    git clone https://github.com/Kishorgujar/Test.git
+  dest: /home/itadmin/protest/pullcode.sh
+  mode: '777'
+- name: Add Entry In crontab
+  ansible.builtin.cron:
+    name: Git Push Job
+    minute: '*/1'
+    job: "/home/itadmin/protest/pullcode.sh"
+- name: Create Docker Container
+  community.docker.docker_container:
+    name: "{{ item }}"
+    image: httpd
+    detach: true
+    state: started
+    ports:
+      - "80"
+    volumes:
+      - "/home/itadmin/clonecod/:/usr/local/apache2/htdocs/"
+    privileged: true
+    loop: "{{ container_name }}"
+- name: Transfer Database
+  copy:
+    src: /home/itadmin/protest/test/ # we create script file in protest directory, so after executing we got "test" repo from GitHub.
+    dest: /clonecod

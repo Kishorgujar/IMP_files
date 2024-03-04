@@ -1,0 +1,7 @@
+---
+- name: Playbook Start
+  hosts: aws
+  vars_files:
+    - vartrial.yml
+  tasks:
+    - import_tasks: gpt.yml

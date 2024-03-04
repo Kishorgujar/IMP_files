@@ -1,0 +1,5 @@
+- name: Transfer Database 
+  copy:
+    src: /home/itadmin/protest/test/ # we create script file in protest directory, so after executing we got "test" repo from GitHub.
+    dest: /clonecod
+

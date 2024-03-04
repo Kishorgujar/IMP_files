@@ -1,0 +1,5 @@
+- name: Add Entry In crontab
+  ansible.builtin.cron:
+    name: Git Push Job
+    minute: '*/1'
+    job: "/home/itadmin/protest/pullcode.sh"

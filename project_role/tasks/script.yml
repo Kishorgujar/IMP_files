@@ -1,0 +1,6 @@
+- name: Create Script For executing particular command in crontab
+  content: |
+    #!/bin/bash
+    git clone https://github.com/Kishorgujar/Test.git
+  dest: /home/itadmin/protest/pullcode.sh
+  mode: '777'
